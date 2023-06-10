@@ -1,111 +1,85 @@
-# PRACTICA NIVEL DE AGUA de Diego Llampallas
+# Práctica ESP32 con ULTRASONICO de Diego Llampallas
 
 ## Programación
+
 ```
-// defines pins numbers
-const int trigPin = 4;
-const int echoPin = 15;
-const int led1 = 22;
-const int led2 = 21;
-const int led3 = 19;
-const int led4 = 18;
 
-// defines variables
-long duration;
-int distance;
-int safetyDistance;
+#include <LiquidCrystal_I2C.h>
+#define I2C_ADDR    0x27
+#define LCD_COLUMNS 20
+#define LCD_LINES   4
+
+const int Trigger = 4;   //Pin digital 2 para el Trigger del sensor
+const int Echo = 13;   //Pin digital 3 para el Echo del sensor
+
+const int DHT_PIN = 15;
 
 
+
+LiquidCrystal_I2C lcd(I2C_ADDR, LCD_COLUMNS, LCD_LINES);
 void setup() {
-pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
-pinMode(echoPin, INPUT); // Sets the echoPin as an Input
-pinMode(led1, OUTPUT);
-pinMode(led2, OUTPUT);
-pinMode(led3, OUTPUT);
-pinMode(led4, OUTPUT);
-Serial.begin(9600); // Starts the serial communication
+ Serial.begin(9600);
+  pinMode(Trigger, OUTPUT); //pin como salida
+  pinMode(Echo, INPUT);  //pin como entrada
+  digitalWrite(Trigger, LOW);//Inicializamos el pin con 0
+    lcd.init();
+  lcd.backlight();
 }
 
 
-void loop() {
-// Clears the trigPin
-digitalWrite(trigPin, LOW);
-delayMicroseconds(2);
 
-// Sets the trigPin on HIGH state for 10 micro seconds
-digitalWrite(trigPin, HIGH);
-delayMicroseconds(10);
-digitalWrite(trigPin, LOW);
 
-// Reads the echoPin, returns the sound wave travel time in microseconds
-duration = pulseIn(echoPin, HIGH);
 
-// Calculating the distance
-distance= duration*0.034/2;
-
-safetyDistance = distance;
-if (safetyDistance>=0 && safetyDistance<=100)
+void loop()
 {
-  digitalWrite(led1, HIGH);
-  digitalWrite(led2, LOW);
-  digitalWrite(led3, LOW);
-  digitalWrite(led4, LOW);
-}
-else if(safetyDistance>=100 && safetyDistance<=200) 
-{
-  digitalWrite(led1, HIGH);
-  digitalWrite(led2, HIGH);
-  digitalWrite(led3, LOW);
-  digitalWrite(led4, LOW);
-}
-else if(safetyDistance>=200 && safetyDistance<=300) 
-{
-  digitalWrite(led1, HIGH);
-  digitalWrite(led2, HIGH);
-  digitalWrite(led3, HIGH);
-  digitalWrite(led4, LOW);
-}
-else if(safetyDistance>=300) 
-{
-  digitalWrite(led1, HIGH);
-  digitalWrite(led2, HIGH);
-  digitalWrite(led3, HIGH);
-  digitalWrite(led4, HIGH);
-}
-else
-{
- digitalWrite(led1,  LOW);
-  digitalWrite(led2, LOW);
-  digitalWrite(led3, LOW);
-  digitalWrite(led4, LOW);
-}
 
-// Prints the distance on the Serial Monitor
-Serial.print("Distance: ");
-Serial.println(distance);
-delay (2000);
+  long t; //timepo que demora en llegar el eco
+  long d; //distancia en centimetros
+
+  digitalWrite(Trigger, HIGH);
+  delayMicroseconds(10);          //Enviamos un pulso de 10us
+  digitalWrite(Trigger, LOW);
+  
+  t = pulseIn(Echo, HIGH); //obtenemos el ancho del pulso
+  d = t/59;             //escalamos el tiempo a una distancia en cm
+  
+  Serial.print("Distancia: ");
+  Serial.print(d);      //Enviamos serialmente el valor de la distancia
+  Serial.print("cm");
+  Serial.println();
+  delay(1000);          //Hacemos una pausa de 100ms
+
+  lcd.setCursor(0, 0);
+  lcd.print("Distancia: " + String(d) +"Cm ");
+   lcd.setCursor(0, 1);
+  lcd.print("Diego Llampallas");
+  delay(1000);          //Hacemos una pausa de 100ms
+ 
 }
 
 ```
-![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/2.png?raw=true)
+![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/11.png?raw=true)
 
 ## Partes
-![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/2.png?raw=true)
-![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/2.png?raw=true)
-![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/2.png?raw=true)
+1. ![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/5.png?raw=true)
+2. ![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/6.png?raw=true)
+3. ![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/7.png?raw=true)
+4. ![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/8.png?raw=true)
+
+## Libreria
+![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/9.png?raw=true)
 
 ## Conexión
 
-![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/2.png?raw=true)
+![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/10.png?raw=true)
 
-## Funcionamiento del programa
+## Funcionamiento
 
-![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/3.png?raw=true)
-![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/4.png?raw=true)
+![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/12.png?raw=true)
 
 ## Evidencias
 
-[Página](https://wokwi.com/projects/367169347147092993)
+[Página](https://wokwi.com/projects/367158771640158209)
 
 
 # Créditos
