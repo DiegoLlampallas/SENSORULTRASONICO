@@ -1,76 +1,115 @@
-## CESAR AUGUSTO GONZALEZ INFANTE
-# Práctica ESP32 con DHT22 y LCD
+# PRACTICA NIVEL DE AGUA de Diego Llampallas
 
 ## Programación
-
 ```
-#include "DHTesp.h"
-#include <LiquidCrystal_I2C.h>
-#define I2C_ADDR    0x27
-#define LCD_COLUMNS 20
-#define LCD_LINES   4
+// defines pins numbers
+const int trigPin = 4;
+const int echoPin = 15;
+const int led1 = 22;
+const int led2 = 21;
+const int led3 = 19;
+const int led4 = 18;
 
-const int DHT_PIN = 15;
+// defines variables
+long duration;
+int distance;
+int safetyDistance;
 
-DHTesp dhtSensor;
-
-LiquidCrystal_I2C lcd(I2C_ADDR, LCD_COLUMNS, LCD_LINES);
 
 void setup() {
-
-  Serial.begin(115200);
-  dhtSensor.setup(DHT_PIN, DHTesp::DHT22);
-  lcd.init();
-  lcd.backlight();
-
+pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+pinMode(led1, OUTPUT);
+pinMode(led2, OUTPUT);
+pinMode(led3, OUTPUT);
+pinMode(led4, OUTPUT);
+Serial.begin(9600); // Starts the serial communication
 }
+
 
 void loop() {
+// Clears the trigPin
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
 
-  TempAndHumidity  data = dhtSensor.getTempAndHumidity();
-  Serial.println("Temp: " + String(data.temperature, 1) + "°C");
-  Serial.println("Humidity: " + String(data.humidity, 1) + "%");
-  Serial.println("---");
-  
-  lcd.setCursor(0, 0);
-  lcd.print("  Temp: " + String(data.temperature, 1) + "\xDF"+"C  ");
-  lcd.setCursor(0, 1);
-  lcd.print(" Humidity: " + String(data.humidity, 1) + "% ");
-  lcd.print("Wokwi Online IoT");
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
 
-  delay(1000);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration = pulseIn(echoPin, HIGH);
 
-   lcd.setCursor(0, 0);
-  lcd.print("HOLA              ");
-  lcd.setCursor(0, 1);
-  lcd.print("CESAR GONZALEZ  ");
+// Calculating the distance
+distance= duration*0.034/2;
 
-  delay(1000);
+safetyDistance = distance;
+if (safetyDistance>=0 && safetyDistance<=100)
+{
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, LOW);
+  digitalWrite(led4, LOW);
 }
+else if(safetyDistance>=100 && safetyDistance<=200) 
+{
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, HIGH);
+  digitalWrite(led3, LOW);
+  digitalWrite(led4, LOW);
+}
+else if(safetyDistance>=200 && safetyDistance<=300) 
+{
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, HIGH);
+  digitalWrite(led3, HIGH);
+  digitalWrite(led4, LOW);
+}
+else if(safetyDistance>=300) 
+{
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, HIGH);
+  digitalWrite(led3, HIGH);
+  digitalWrite(led4, HIGH);
+}
+else
+{
+ digitalWrite(led1,  LOW);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, LOW);
+  digitalWrite(led4, LOW);
+}
+
+// Prints the distance on the Serial Monitor
+Serial.print("Distance: ");
+Serial.println(distance);
+delay (2000);
+}
+
 ```
+![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/2.png?raw=true)
 
-## Librerías
+## Partes
+![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/2.png?raw=true)
+![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/2.png?raw=true)
+![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/2.png?raw=true)
 
-1. **DHT sensor library for ESPx**
-2. **LiquidCrystal I2C**
-![](https://github.com/CesarG16/DHT22LCD/blob/main/eje1.png?raw=true)
 ## Conexión
 
-![](https://github.com/CesarG16/DHT22LCD/blob/main/eje2.png?raw=true)
+![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/2.png?raw=true)
 
 ## Funcionamiento del programa
 
-![](https://github.com/CesarG16/DHT22LCD/blob/main/eje3.png?raw=true)
-![](https://github.com/CesarG16/DHT22LCD/blob/main/eje4.png?raw=true)
-
+![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/3.png?raw=true)
+![](https://github.com/DiegoLlampallas/DHT11_LCD/blob/main/4.png?raw=true)
 
 ## Evidencias
 
-[Página](https://wokwi.com/projects/367164531602566145)
+[Página](https://wokwi.com/projects/367169347147092993)
 
 
 # Créditos
 
-Desarrollado por Ing. Cesar Augusto Gonzalez Infante
+Desarrollado por Ing. Diego Alberto Llampallas Vega
 
-- [GitHub](https://github.com/CesarG16)
+- [GitHub](https://github.com/DiegoLlampallas)
