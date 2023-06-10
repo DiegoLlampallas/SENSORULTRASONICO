@@ -71,7 +71,7 @@ void loop()
 
 ## Conexión
 
-![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/9.png?raw=true)
+![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/10.png?raw=true)
 
 ## Funcionamiento
 
