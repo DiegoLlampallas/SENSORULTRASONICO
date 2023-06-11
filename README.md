@@ -1,4 +1,36 @@
 # Práctica ESP32 con ULTRASONICO de Diego Llampallas
+Este repositorio muestra como podemos programar una ESP32 con el sensor Ultrasonico y pantalla LCD.
+
+## Introducción
+A través de la página https://wokwi.com/  se puede hacer simulaciones de programas con arduino y sensores.
+### Descripción
+
+La ```Esp32``` la utilizamos en un entorno de adquision de datos, lo cual en esta practica ocuparemos un sensor (```Sensor ultrasonico```) para poder saber la distancia y una pantalla LCD 16x2 para observar los datos; Cabe aclarar que esta practica se usara un simulador llamado [WOKWI](https://https://wokwi.com/).
+
+
+## Material Necesario
+
+Para realizar esta practica se usaran los siguientes elementos:
+
+- [WOKWI](https://https://wokwi.com/)
+- Tarjeta ESP 32
+- Sensor Ultrasonico
+- Pantalla LCD 16X2
+
+
+
+## Instrucciones
+
+### Requisitos previos
+
+Para poder usar este repositorio necesitas entrar a la plataforma [WOKWI](https://https://wokwi.com/).
+
+
+### Instrucciones de preparación de entorno 
+1. Una vez dentro de wokwi seleccionar la tarjeta ESP32
+
+![](https://github.com/DiegoLlampallas/Practica-DHT22/blob/main/6.png?raw=true)
+2. Abrir la terminal de programación y colocar la siguente programación:
 
 ## Programación
 
@@ -73,6 +105,16 @@ void loop()
 
 ![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/10.png?raw=true)
 
+### Instrucciónes de operación
+
+1. Iniciar simulador.
+2. Visualizar los datos en el monitor serial.
+3. Visualizar en la pantalla LCD 16X2 los datos mostrados por el sensor ultrasonico.
+
+
+## Resultados
+
+Cuando haya funcionado, verás los valores dentro del monitor serial y en la pantalla LCD 16x2.
 ## Funcionamiento
 
 ![](https://github.com/DiegoLlampallas/SENSORULTRASONICO/blob/main/12.png?raw=true)
