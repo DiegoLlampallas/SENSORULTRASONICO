@@ -1,4 +1,4 @@
-# Práctica ESP32 con ULTRASONICO de Diego Llampallas
+# Práctica ESP32 con ULTRASONICO  y pantalla LCD de Diego Llampallas
 Este repositorio muestra como podemos programar una ESP32 con el sensor Ultrasonico y pantalla LCD.
 
 ## Introducción
@@ -16,6 +16,8 @@ Para realizar esta practica se usaran los siguientes elementos:
 - Tarjeta ESP 32
 - Sensor Ultrasonico
 - Pantalla LCD 16X2
+- Fuente de voltaje de 5v
+- Tierra
 
 
 
